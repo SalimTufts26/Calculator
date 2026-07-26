@@ -47,8 +47,21 @@
   width: 80%;
   flex-wrap: wrap;
   justify-content: center;
+
 }
 
 .numbers button {
   width: 80px;
+  border-radius: 5px;
+}
+
+.operators {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+
+.operators button {
+  height: 50px;
+  border-radius: 5px;
 }
