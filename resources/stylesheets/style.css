@@ -32,3 +32,23 @@
   font-size: 30px;
   padding: 8px;
 }
+
+.mid {
+  display: flex;
+  border: solid rgb(46, 45, 45);
+  border-radius: 10px;
+  height: 100%;
+  margin: 10px;
+}
+
+.numbers {
+  display: flex;
+  height: 100%;
+  width: 80%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.numbers button {
+  width: 80px;
+}
