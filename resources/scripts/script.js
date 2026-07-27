@@ -87,4 +87,3 @@ const mathFunc = {
 function operate(a, b, o) {
   return mathFunc[o].calc(a, b);
 }
-
