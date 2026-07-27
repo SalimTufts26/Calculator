@@ -1,13 +1,15 @@
 const numberButtons = document.querySelector("#numbers");
 const operatorButtons = document.querySelector("#operators");
 const output = document.querySelector("#output");
+const clearBtn = document.querySelector("#clear");
+const nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const ops = ['add', 'divide', 'multiply', 'subtract', 'calculate']
 
-let first = "";
-let second = "";
-let operation = "";
-let preCalc = true;
+let numA = "";
+let numB = "";
+let operator = "";
 
-// Create Buttons
+// Create Number Buttons
 for (let i = 0; i <= 9; i++){
   const button = document.createElement("button");
   button.id = String(i);
@@ -18,85 +20,71 @@ for (let i = 0; i <= 9; i++){
 // Add event listener to each button
 const buttons = document.querySelectorAll("button");
 buttons.forEach(btn => btn.addEventListener("click", () => {
-  if (preCalc) {
-    switch(btn.id) {
-      case "clear":
-        output.textContent = "";
-        first = "";
-        second = "";
-        operator = "";
-        preCalc = true;
-        break;
-      case "+":
-      case "-":
-      case "/":
-      case "x":
-        output.textContent = btn.id;
-        operation = btn.id;
-        preCalc = false;
-        break;
-      case "=":
-        output.textContent = first;
-        break;
-      default:
-        output.textContent += btn.id;
-        first += btn.id;
-        break;
+  // Clear the calculator
+  if (btn.id == "clear") {
+    numA = "";
+    numB = "";
+    operator = "";
+    output.textContent = "";
+  }
+
+  // Determine numA
+  if (operator == "") {
+    if (nums.includes(Number(btn.id))) {
+      numA += btn.id;
+      output.textContent = numA;
     }
+    if (ops.includes(btn.id) && btn.id !== "calculate") {
+      operator = btn.id;
+      output.textContent += ` ${mathFunc[operator].key} `;
+    }
+
+  // Determine numB
   } else {
-    switch(btn.id) {
-      case "clear":
-        output.textContent = "";
-        first = "";
-        second = "";
-        operation = "";
-        preCalc = true;
-        break;
-      case "+":
-      case "-":
-      case "/":
-      case "x":
-      case "=":
-        if (operation == "+"){
-          first = add(first, second);
-        } else if (operation == "-") {
-          first = subtract(first, second);
-        } else if (operation == "/") {
-          first = divide(first, second);
-        } else {
-          first = multiply(first, second);
-        }
-        second = "";
-        break;
-      default:
-        output.textContent = btn.id;
-        second += btn.id;
-        break;
+    if (nums.includes(Number(btn.id))) {
+      numB += btn.id;
+      output.textContent += btn.id;
+    }
+    if (ops.includes(btn.id)) {
+      calculation = operate(Number(numA), Number(numB), operator);
+      numA = calculation;
+      numB = "";
+      switch(btn.id) {
+        case "calculate":
+          output.textContent = calculation;
+          operator = "";
+          break;
+        default:
+          operator = btn.id;
+          output.textContent = calculation + ` ${mathFunc[operator].key} `;
+          break;
+      }
     }
   }
 }));
 
+// Calculation Logic
 
-// Math Operation Functions
+const mathFunc = {
+  add: {
+    calc: (a, b) => a + b,
+    key: '+'
+  },
+  subtract: {
+    calc: (a, b) => a - b,
+    key: '-'
+  },
+  multiply: {
+    calc: (a, b) => a * b,
+    key: 'x'
+  },
+  divide: {
+    calc: (a, b) => a / b,
+    key: '/'
+  }
+}
 
-function add(a, b) {
-  a = Number(a);
-  b = Number(b);
-  output.textContent = a + b;
-};
-function subtract(a, b) {
-  a = Number(a);
-  b = Number(b);
-  output.textContent = a - b;
-};
-function divide(a, b) {
-  a = Number(a);
-  b = Number(b);
-  output.textContent = a / b;
-};
-function multiply(a, b) {
-  a = Number(a);
-  b = Number(b);
-  output.textContent = a * b;
-};
+function operate(a, b, o) {
+  return mathFunc[o].calc(a, b);
+}
 
