@@ -2,7 +2,7 @@ const numberButtons = document.querySelector("#numbers");
 const operatorButtons = document.querySelector("#operators");
 const output = document.querySelector("#output");
 const clearBtn = document.querySelector("#clear");
-const nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 const ops = ['add', 'divide', 'multiply', 'subtract', 'calculate']
 
 let numA = "";
@@ -10,9 +10,9 @@ let numB = "";
 let operator = "";
 
 // Create Number Buttons
-for (let i = 0; i <= 9; i++){
+for (num of nums){
   const button = document.createElement("button");
-  button.id = String(i);
+  button.id = String(num);
   button.textContent = button.id;
   numberButtons.appendChild(button);
 }
