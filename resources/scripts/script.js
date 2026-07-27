@@ -43,7 +43,7 @@ buttons.forEach(btn => btn.addEventListener("click", () => {
   } else {
     if (nums.includes(Number(btn.id))) {
       numB += btn.id;
-      output.textContent += numB;
+      output.textContent += btn.id;
     }
     if (ops.includes(btn.id)) {
       calculation = operate(Number(numA), Number(numB), operator);
